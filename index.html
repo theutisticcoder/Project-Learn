@@ -26,7 +26,7 @@
                 e.preventDefault()
                 var speech = new SpeechSynthesisUtterance(document.querySelector("textarea").innerhtml);
                 speech.lang = "yi";
-                SpeechSynthesis.speak(speech);
+                speechSynthesis.speak(speech);
             }
             else if(e.key === "Enter"){
                 e.preventDefault()
