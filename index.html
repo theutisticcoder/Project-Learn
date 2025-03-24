@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Learn</title>
+    <script src="https://translate.google.com/translate_a/element.js?cb=translatePage"></script>
 
 
 </head>
@@ -14,12 +15,6 @@
         Hello!
     </textarea>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var script = document.createElement("script");
-            script.src = "https://translate.google.com/translate_a/element.js?cb=translatePage";
-            document.head.appendChild(script);
-        });
-
         document.querySelector("textarea").addEventListener("keydown", function (e) {
            
             if((e.metaKey|| e.ctrlKey) && e.key === "Enter"){
