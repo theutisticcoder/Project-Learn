@@ -20,6 +20,7 @@
                 console.log(v)
             })
         }
+        var speech;
         async function translateText() {
             let text = document.getElementById("text").value;
             let targetLang = "yi"; // Yiddish language code
@@ -30,7 +31,7 @@
                 let response = await fetch(url);
                 let result = await response.json();
                 setTimeout(()=> {
-                    var speech = new SpeechSynthesisUtterance(result[0].map(item => item[0]).join("")).value;
+                    speech = new SpeechSynthesisUtterance(result[0].map(item => item[0]).join("")).value;
                     speech.lang = "yi";
                     speechSynthesis.speak(speech);
                 }, 1000)
