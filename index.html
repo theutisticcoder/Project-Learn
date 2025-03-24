@@ -11,24 +11,34 @@
 </head>
 
 <body>
-    <textarea id="text" class = "text" translate="yes">
+    <textarea id="text" class="text" translate="yes">
         Hello!
     </textarea>
     <script>
-        document.querySelector("textarea").addEventListener("keydown", function (e) {
-           
-            if((e.metaKey|| e.ctrlKey) && e.key === "Enter"){
-                e.preventDefault()
-                var speech = new SpeechSynthesisUtterance(document.querySelector("textarea").innerHTML);
+        async function translateText() {
+            let text = document.getElementById("text").value;
+            let targetLang = "yi"; // Yiddish language code
+
+            let url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+
+            try {
+                let response = await fetch(url);
+                let result = await response.json();
+                var speech = new SpeechSynthesisUtterance(result[0].map(item => item[0]).join("")).value);
                 speech.lang = "yi";
                 speechSynthesis.speak(speech);
+            } catch (error) {
+                console.error("Error:", error);
             }
-            else if(e.key === "Enter"){
+        }
+        document.querySelector("textarea").addEventListener("keydown", function (e) {
+
+            if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
                 e.preventDefault()
-                new google.translate.TranslateElement({ pageLanguage: 'auto', includedLanguages: 'yi', autoDisplay: true }, "text");
+                translateText();
             }
         });
-        
+
     </script>
 </body>
 
