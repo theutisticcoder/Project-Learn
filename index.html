@@ -29,7 +29,7 @@
 
         var recognition = new webkitSpeechRecognition();
 
-        recognition.lang = "es-ES";
+        recognition.lang = "auto";
         recognition.continuous = false;
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
@@ -43,7 +43,7 @@
                     var result = await model.generateContent(text)
                     result = result.response.text();
                     var utter = new SpeechSynthesisUtterance(result)
-                    utter.lang = "es-ES"
+                    utter.lang = "auto"
                     speechSynthesis.Speak(utter)
                 }
             }
