@@ -26,8 +26,8 @@
                 let result = await response.json();
                 setTimeout(()=> {
                     var speech = new SpeechSynthesisUtterance(result[0].map(item => item[0]).join("")).value;
-                speech.lang = "yi";
-                speechSynthesis.speak(speech);
+                    speech.lang = "yi";
+                    speechSynthesis.speak(speech);
                 }, 1000)
                 
             } catch (error) {
@@ -41,6 +41,11 @@
                 translateText();
             }
         });
+        window.onload = ()=> {
+            speechSynthesis.getVoices().forEach(v=>{
+                console.log(v)
+            })
+        }
 
     </script>
 </body>
