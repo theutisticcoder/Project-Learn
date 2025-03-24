@@ -1,24 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Learn</title>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'auto', // Auto-detect the original language
-                includedLanguages: 'es', // Change this to the target language
-                autoDisplay: true
-            }, 'google_translate_element');
-        }
-        </script>
-        <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-        <p translate="yes">
-            Hello! I am Sam.
-        </p>
+
+
 </head>
+
 <body>
-    
+    <textarea translate="yes">
+        Hello!
+    </textarea>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var script = document.createElement("script");
+            script.src = "https://translate.google.com/translate_a/element.js?cb=translatePage";
+            document.head.appendChild(script);
+        });
+
+        document.querySelector("textarea").addEventListener("keydown", function (e) {
+           
+            if((e.metaKey|| e.ctrlKey) && e.key === "Enter"){
+                e.preventDefault()
+                var speech = new SpeechSynthesisUtterance(document.querySelector("textarea").innerhtml);
+                speech.lang = "yi";
+                SpeechSynthesis.speak(speech);
+            }
+            else if(e.key === "Enter"){
+                e.preventDefault()
+                new google.translate.TranslateElement({ pageLanguage: 'auto', includedLanguages: 'yi', autoDisplay: true });
+            }
+        });
+        
+    </script>
 </body>
+
 </html>
