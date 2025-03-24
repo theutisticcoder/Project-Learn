@@ -37,7 +37,7 @@
         document.querySelector("button").onclick = () => {
             recognition.start();
             recognition.onspeechend = () => {
-                recogntion.stop();
+                recognition.stop();
                 recognition.onresult = async (e) => {
                     var text = e.results[0][0].transcript;
                     var result = await model.generateContent(text)
