@@ -24,7 +24,7 @@
             try {
                 let response = await fetch(url);
                 let result = await response.json();
-                var speech = new SpeechSynthesisUtterance(result[0].map(item => item[0]).join("")).value);
+                var speech = new SpeechSynthesisUtterance(result[0].map(item => item[0]).join("")).value;
                 speech.lang = "yi";
                 speechSynthesis.speak(speech);
             } catch (error) {
