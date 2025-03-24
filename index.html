@@ -6,55 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Learn</title>
     <script src="https://translate.google.com/translate_a/element.js?cb=translatePage"></script>
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
 
 
 </head>
 
 <body>
-    <textarea id="text" class="text" translate="yes">
-        Hello!
-    </textarea>
-    <script>
-        window.onload = () => {
-            window.speechSynthesis.getVoices().forEach(v => {
-                console.log(v)
-            })
-        }
-        var speech;
-        async function translateText() {
-            let text = document.getElementById("text").value;
-            let targetLang = "yi"; // Yiddish language code
+    <button translate="yes">Start Convo!</button>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
 
-            let url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=es&dt=t&q=${encodeURIComponent(text)}`;
+        // Fetch your API_KEY
+        const genAI = new GoogleGenerativeAI("AIzaSyB-qX79cjwUfTXMM3byFmN_3-tfetp4sDI");
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash",   systemInstruction: "simply reply and have a conversation with the user, like asking about their daya dn getting to know them as a friend in the language they speak to you in.",
+    });
 
-            try {
-                let response = await fetch(url);
-                let result = await response.json();
-                setTimeout(() => {
-                    speech = new SpeechSynthesisUtterance(result[0].map(item => item[0]).join("")).value;
-                    speech.lang = "es-ES";
-                    speechSynthesis.speak(speech);
-                }, 1000)
+        var recognition = new webkitSpeechRecognition();
 
-            } catch (error) {
-                console.error("Error:", error);
+        recognition.lang = "es-ES";
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        document.querySelector("button").onclick = () => {
+            recognition.start();
+            recognition.onspeechend = () => {
+                recogntion.stop();
+                recognition.onresult = async (e) => {
+                    var text = e.results[0][0].transcript;
+                    var result = await model.generateContent(text)
+                    result = result.response.text();
+                    var utter = new SpeechSynthesisUtterance(result)
+                    utter.lang = "es-ES"
+                    speechSynthesis.Speak(utter)
+                }
             }
         }
-        document.querySelector("textarea").addEventListener("keydown", function (e) {
-
-            if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
-                e.preventDefault()
-                translateText();
-            }
-        });
-        function listVoices() {
-            const voices = speechSynthesis.getVoices();
-            console.log("Available voices:");
-            voices.forEach((voice, index) => {
-                console.log(`${index + 1}: ${voice.name} (${voice.lang}) ${voice.default ? '[Default]' : ''}`);
-            });
-        }
-
 
     </script>
 </body>
