@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <textarea translate="yes">
+    <textarea id="text" class = "text" translate="yes">
         Hello!
     </textarea>
     <script>
@@ -24,13 +24,13 @@
            
             if((e.metaKey|| e.ctrlKey) && e.key === "Enter"){
                 e.preventDefault()
-                var speech = new SpeechSynthesisUtterance(document.querySelector("textarea").innerhtml);
+                var speech = new SpeechSynthesisUtterance(document.querySelector("textarea").innerHTML);
                 speech.lang = "yi";
                 speechSynthesis.speak(speech);
             }
             else if(e.key === "Enter"){
                 e.preventDefault()
-                new google.translate.TranslateElement({ pageLanguage: 'auto', includedLanguages: 'yi', autoDisplay: true });
+                new google.translate.TranslateElement({ pageLanguage: 'auto', includedLanguages: 'yi', autoDisplay: true }, "text");
             }
         });
         
